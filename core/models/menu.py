@@ -1,12 +1,19 @@
 from django.utils.translation import gettext as _
+from django.contrib.staticfiles import finders
 from .fields import ModelSelect2Multiple
 from django.db import models
 from .base import Base
 import glob
+import os
 
 from django.contrib.contenttypes.models import ContentType
 from crispy_forms.layout import Layout, Row, Column
 
+
+print(os.getcwd())
+icons = finders.find('ICONS')
+icons = glob.glob(icons)
+print(icons)
 
 class Menu(Base):
     ICONS = [((icon.split('/')[-1]).split('.')[0], ' '.join(((icon.split('/')[-1]).split('.')[0]).split('-')).title()) for icon in glob.glob("ICONS/*.svg")]
