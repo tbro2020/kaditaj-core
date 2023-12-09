@@ -1,6 +1,5 @@
-from pip._internal.req import parse_requirements
 from setuptools import setup
 
-install_reqs = parse_requirements('requirements.txt', session='hack')
-reqs = [ir.requirement for ir in install_reqs]
+with open('requirements.txt') as f:
+    reqs = [line.rstrip() for line in f]
 setup(install_requires=reqs)

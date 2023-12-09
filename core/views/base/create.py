@@ -68,11 +68,9 @@ class Create(BaseView):
         # Add approvers
         flow = Flow.objects.filter(content_type__model=model._meta.model_name).first()
         approvers = flow.steps.values_list('user', flat=True).distinct() if flow else []
-        approvers = [Approbation(
-            content_type=ContentType.objects.get_for_model(model), 
-            object_id=form.instance.id, 
-            user_id=approver
-        ) for approver in approvers]
+        content_type = ContentType.objects.get_for_model(model)
+
+        approvers = [Approbation(content_type=content_type, object_id=form.instance.id, user_id=approver) for approver in approvers]
         Approbation.objects.bulk_create(approvers)
 
         # Save formsets
@@ -82,7 +80,7 @@ class Create(BaseView):
                 setattr(obj, formset.fk.name, form.instance)
                 obj.save()
 
-        # Log
+        # To-Do: Log message according to the form and formsets
         self.log(model, form, action=ADDITION, formsets=formsets)
         
         messages.add_message(request, messages.SUCCESS, message=_('Le {model} a été créé avec succès').format(**{'model': model._meta.model_name}))

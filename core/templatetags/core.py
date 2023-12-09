@@ -22,8 +22,3 @@ def getattribute(value, arg):
 def urlencode(value):
     value = {k: v for k, v in value.items() if v}
     return urllib.parse.urlencode(value)
-
-
-@register.filter('toint')
-def toint(value):
-    return int(value or 0)

@@ -31,12 +31,14 @@ class BaseView(LoginRequiredMixin, PermissionRequiredMixin, View):
         return Approbation.objects.for_model(model).filter(object_id=self.kwargs.get('pk'))
     
     def activities(self):
-        pk = self.kwargs.get('pk')
         app = self.kwargs.get('app')
         model = self.kwargs.get('model')
         model = apps.get_model(app, model_name=model)
         content_type = ContentType.objects.get_for_model(model)
-        return LogEntry.objects.filter(**{'content_type_id': content_type.id, 'object_id': pk})
+        return LogEntry.objects.filter(**{
+            'content_type_id': content_type.id, 
+            'object_id': self.kwargs.get('pk')
+        })
     
     def log(self, model, form, action, formsets=None):
         LogEntry.objects.log_action(
@@ -55,7 +57,10 @@ class BaseView(LoginRequiredMixin, PermissionRequiredMixin, View):
             'sender': obj,
             'actor': self.request.user,
             'recipient': approver,
-            'verb': _('Demande d\'approbation pour le/la {model} #{pk}').format(**{'model': model._meta.verbose_name, 'pk': obj.pk}),
+            'verb': _('Demande d\'approbation du/de {model} #{pk}').format(**{
+                'model': model._meta.verbose_name, 
+                'pk': obj.pk
+            }),
             'action_object': obj,
             'target': obj,
             'level': 'info',

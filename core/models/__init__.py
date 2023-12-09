@@ -1,5 +1,3 @@
-from .user import *
-
 from .base import Base
 from .approbation import Approbation
 

@@ -8,10 +8,10 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class Template(Base):
-    content = HTMLField(_('contenu'), null=True, default=None)
-    name = models.CharField(_('nom'), max_length=100, unique=True)
     content_type = ModelSelect2Single(ContentType, verbose_name=_('type de contenu'), on_delete=models.CASCADE)
-    
+    name = models.CharField(_('nom'), max_length=100, unique=True)
+    content = HTMLField(_('contenu'), null=True, default=None)
+
     search_field = ('name')
     list_display = ('id', 'content_type', 'name')
     layout = Layout(Row(Column('content_type'), Column('name')), 'content')

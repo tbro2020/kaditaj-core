@@ -19,13 +19,16 @@ class List(BaseView):
 
         list_filter = getattr(model, 'list_filter', [])
         list_display = [field for field in model._meta.fields if field.name in getattr(model, 'list_display', [])]
-        
-        self.qs = model.objects.select_related().prefetch_related()#.order_by('-created_at')
-        try:
-            self.qs = self.qs.all(user=request.user)
-        except Exception:
-            self.qs = self.qs.all()
-        
+
+        # To Do : Order by last updated date
+        #self.qs = model.objects.select_related().prefetch_related()
+        #try:
+        #    self.qs = self.qs.all(user=request.user)
+        #except Exception:
+        #    self.qs = self.qs.all()
+        self.qs = model.objects.select_related().prefetch_related().all(user=getattr(request, 'user', None))
+
+
         # Hard filter
         query = {k:v for k, v in request.GET.dict().items() if v}
         fields = [field.name for field in model._meta.fields if field.name]
@@ -36,6 +39,7 @@ class List(BaseView):
         qs_filter = qs_filter(request.GET, queryset=self.qs)
         self.qs = qs_filter.qs.order_by('-id')
         
+        # Solve pagnitor problem
         paginator = Paginator(self.qs, 25)
         self.qs = paginator.page(int(request.GET.dict().get('page', 1)))
         return render(request, getattr(model, "change_list_template", self.template_name), locals())

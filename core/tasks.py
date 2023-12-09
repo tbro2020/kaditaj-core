@@ -6,14 +6,17 @@ import pandas as pd
 
 from core.models import ImporterStatus
 
+def runner(obj):
+    try:
+        exec(obj.job, locals(), globals())
+    except Exception as ex:
+        obj.metadata['error'] = str(ex)
+
 @shared_task(name='daily')
 def daily():
     qs = apps.get_model('core', 'job').objects.all()
-    for obj in qs:
-        try:
-            exec(obj.job, locals(), globals())
-        except:
-            pass
+    [runner(obj) for obj in qs]
+
 
 @shared_task(name='importer')
 def importer(pk):

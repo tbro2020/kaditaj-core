@@ -1,3 +1,2 @@
-from .user import UserManager
+from .approbation import ApprobationQueryset
 from .base import QuerySet
-from .approbation import *

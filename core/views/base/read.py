@@ -26,7 +26,7 @@ class Read(BaseView):
         form = form(instance=obj, initial=initial)
 
         formsets = [apps.get_model(inline.split('.')[0], model_name=inline.split('.')[-1]) for inline in getattr(model, 'inlines', [])]
-        formsets = [inlineformset_factory(model, inline, fields=getattr(inline, 'inline_form_fields', '__all__'), can_delete=True, extra=1) for inline in formsets]
+        formsets = [inlineformset_factory(model, inline, fields=getattr(inline, 'inline_form_fields', '__all__'), can_delete=False, extra=0) for inline in formsets]
         formsets = [formset(instance=obj) for formset in formsets]
         
         return render(request, self.template_name, locals())

@@ -33,11 +33,8 @@ class Approbation(BaseView):
         
         # To-Do: Review this code to not allow all user to approve
         if action.upper() not in ['APPROVED', 'REJECTED']: raise Http404
-        approbation = approbations.filter(user=request.user, action=None).update(action=action.upper(), comment=comment)
+        approbations.filter(user=request.user, action=None).update(action=action.upper(), comment=comment)
         messages.success(request, _('Vous avez approuvé le {model} #{id}').format(model=model._meta.verbose_name, id=obj.pk))
-
-        #obj = self.approvers_from_process(model, obj)
-        #notified_on_approved(model._meta.app_label, model._meta.model_name, obj.pk, False)
 
         next = request.GET.get('next', obj.get_absolute_url())
         return redirect(next)

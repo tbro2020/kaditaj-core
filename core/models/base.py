@@ -1,6 +1,5 @@
 from django_currentuser.db.models import CurrentUserField
 from django.utils.translation import gettext as _
-from crispy_forms.layout import Layout
 from django.urls import reverse_lazy
 
 from .managers.base import QuerySet
@@ -20,9 +19,6 @@ class Base(models.Model):
     objects = QuerySet.as_manager()
 
     list_display = ('id', 'name')
-    search_fields = ()
-    layout = Layout()
-    list_filter = ()
     
     def __str__(self):
         return self.name

@@ -9,23 +9,28 @@ from crispy_forms.layout import Layout, Row, Column
 
 
 class Widget(Base):
-    name = models.CharField(verbose_name=_('nom'), max_length=100)
     description = models.CharField(verbose_name=_('description'), max_length=250)
+    name = models.CharField(verbose_name=_('nom'), max_length=100)
 
+    is_staff = models.BooleanField(verbose_name=_('requis pour le personnel'), default=False)
     permissions = ModelSelect2Multiple('auth.permission', verbose_name=_('permissions'))
+
     template = AceField(mode='html', verbose_name=_('template'))
     view = AceField(mode='python', verbose_name=_('view'))
 
     list_display = ('id', 'name', 'description', 'updated_at')
     layout = Layout(
         Row(
-            Column('name', css_class='col-md-6'),
-            Column('description', css_class='col-md-6'),
+            Column('name'),
+            Column('description'),
         ),
-        'permissions',
         Row(
-            Column('template', css_class='col-md-6'),
-            Column('view', css_class='col-md-6'),
+            Column('permissions'),
+            Column('is_staff'),
+        ),
+        Row(
+            Column('template'),
+            Column('view'),
         ),
     )
 

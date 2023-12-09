@@ -1,11 +1,11 @@
-import glob
-from .base import Base
-from django.db import models
-from .fields import ModelSelect2Multiple
 from django.utils.translation import gettext as _
+from .fields import ModelSelect2Multiple
+from django.db import models
+from .base import Base
+import glob
 
-from crispy_forms.layout import Layout, Row, Column
 from django.contrib.contenttypes.models import ContentType
+from crispy_forms.layout import Layout, Row, Column
 
 
 class Menu(Base):

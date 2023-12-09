@@ -21,18 +21,9 @@ urlpatterns = [
     path('action/required', ActionRequired.as_view(), name='action-required'),
     path('approbation/<str:action>/<str:app>/<str:model>/<int:pk>', Approbation.as_view(), name='approbation'),
     
+    path('flow/<int:pk>', Flow.as_view(), name='flow'),
     path('template/<int:pk>', Template.as_view(), name='template'),
     path('notifications', Notifications.as_view(), name='notifications'),
     path('notification/<int:pk>', Notification.as_view(), name='notification'),
     path('print/<str:app>/<str:model>/<int:pk>', Print.as_view(), name='print'),
-
-    path('flow/<int:pk>', Flow.as_view(), name='flow'),
-
-    #path('template/import/<str:app>/<str:model>', Template.as_view(), name='template'),
-    #path('approve/<str:app>/<str:model>/<int:pk>', Approve.as_view(), name='approve'),
-    #path('exporter/<str:app>/<str:model>', Exporter.as_view(), name='exporter'),
-    #path('importer/<str:app>/<str:model>', Importer.as_view(), name='importer'),
-
-    #path('process/<int:pk>', Process.as_view(), name='process'),
-    #path('tree/<int:pk>', Tree.as_view(), name='tree'),
 ]

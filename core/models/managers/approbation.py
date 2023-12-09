@@ -1,7 +1,5 @@
-from django.apps import apps
-from django.db import models
 from django.contrib.contenttypes.models import ContentType
-
+from django.db import models
 
 class ApprobationQueryset(models.QuerySet):
     def for_model(self, model, queryset=None):

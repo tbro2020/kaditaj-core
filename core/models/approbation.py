@@ -1,8 +1,6 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import gettext as _
-from django.core.serializers import serialize
 from core.models.fields import ModelSelect
 
 from django.conf import settings

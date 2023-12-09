@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="page-content">
+    <div class="row">
+        {% for widget in widgets %}
+            {{ widget.render|safe }}
+        {% empty %}
+            <h4 class="text-center">{% trans "Aucun widget trouver" %}</h4>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
