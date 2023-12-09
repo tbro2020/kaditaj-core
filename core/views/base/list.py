@@ -26,7 +26,7 @@ class List(BaseView):
         #    self.qs = self.qs.all(user=request.user)
         #except Exception:
         #    self.qs = self.qs.all()
-        self.qs = model.objects.select_related().prefetch_related().all(user=getattr(request, 'user', None))
+        self.qs = model.objects.select_related().prefetch_related().all()
 
 
         # Hard filter

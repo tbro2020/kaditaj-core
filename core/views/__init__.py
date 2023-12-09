@@ -11,4 +11,5 @@ from .action_required import *
 from .password_change import *
 
 from .flow import Flow
+from .print import Print
 from .template import Template

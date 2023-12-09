@@ -2000,7 +2000,6 @@ core/models/fields/select_list_create_choice_field.py
 core/models/fields/time_field.py
 core/models/managers/__init__.py
 core/models/managers/approbation.py
-core/models/managers/base.py
 core/signals/__init__.py
 core/signals/importer.py
 core/signals/job.py

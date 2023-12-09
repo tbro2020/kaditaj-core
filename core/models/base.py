@@ -2,11 +2,14 @@ from django_currentuser.db.models import CurrentUserField
 from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
 
-from .managers.base import QuerySet
-from .fields import JSONField
+from core.models.fields import JSONField
+from django.conf import settings
 from django.db import models
 from django.apps import apps
+from pydoc import locate
 
+BASE_MANAGER = getattr(settings, 'CORE_BASE_MODEL_QUERYSET', 'django.db.models.QuerySet')
+BASE_MANAGER = locate(BASE_MANAGER).as_manager()
 
 class Base(models.Model):
     updated_by = CurrentUserField(verbose_name=_('mis à jour par') ,related_name='%(app_label)s_%(class)s_updated_by', on_update=True)
@@ -16,7 +19,7 @@ class Base(models.Model):
     updated_at = models.DateTimeField(verbose_name=_('mis à jour le/à'), auto_now=True)
 
     metadata = JSONField(verbose_name=_('meta'), default=dict, blank=True)
-    objects = QuerySet.as_manager()
+    objects = BASE_MANAGER
 
     list_display = ('id', 'name')
     
