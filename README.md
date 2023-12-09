@@ -35,7 +35,8 @@ Quick start
 
 2. Include the polls URLconf in your project urls.py like this::
 
-    path("core/", include("core.urls")),
+    path('', include('core.urls')),
+    path('', include('django.contrib.auth.urls')),
 
 3. Run ``python manage.py migrate`` to create the polls models.
 
