@@ -9,6 +9,8 @@ from django.apps import apps
 from django.urls import reverse_lazy
 from django.conf import settings
 
+from django.contrib.auth import get_user_model
+
 def base(request):
     PASSWORD_RESET_REDIRECT_URL = getattr(settings, 'PASSWORD_RESET_REDIRECT_URL', reverse_lazy('password_reset'))
     if not request.user.is_authenticated: return {
@@ -77,8 +79,11 @@ def base(request):
             'permission': 'core.view_preference'
         }, {
             'title': _('Équipe'),
-            'href': reverse_lazy('core:list', kwargs={'app': 'core', 'model': 'user'}),
-            'permission': 'core.view_user'
+            'href': reverse_lazy('core:list', kwargs={
+                'app': get_user_model()._meta.app_label, 
+                'model': get_user_model()._meta.model_name
+            }),
+            'permission': '{}.view_{}'.format(get_user_model()._meta.app_label, get_user_model()._meta.model_name)
         }, {
             'title': _('Autorisations des groupes'),
             'href': reverse_lazy('core:list', kwargs={'app': 'auth', 'model': 'group'}),
