@@ -47,6 +47,9 @@
     </div>
 </fieldset>
 <script>
-    $(document).ready(() => setTimeout(() => $('select').select2({disabled: true}), 100));    
+    $(document).ready(() => setTimeout(() => $('select').select2({
+        disabled: true,
+        theme: 'bootstrap-5',
+    }), 100));    
 </script>
 {% endwith %}
